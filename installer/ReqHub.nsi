@@ -66,6 +66,7 @@ VIAddVersionKey /LANG=1033 "LegalCopyright" "Copyright (C) 2026 ${APP_PUBLISHER}
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_COMPONENTS
+!define MUI_PAGE_CUSTOMFUNCTION_PRE DirectoryPagePre
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -98,6 +99,20 @@ Function .onInit
 
   SetRegView 64
   SetShellVarContext all
+FunctionEnd
+
+; During upgrades, keep the registered installation directory and skip the
+; directory picker so users cannot accidentally create a second installation.
+; The picker remains available for a clean install or a stale registry entry.
+Function DirectoryPagePre
+  SetRegView 64
+  ReadRegStr $0 HKLM "${APP_REGISTRY_KEY}" "InstallDir"
+  ${If} $0 != ""
+    IfFileExists "$0\.reqhub-install" 0 done
+    StrCpy $INSTDIR $0
+    Abort
+  ${EndIf}
+done:
 FunctionEnd
 
 Function EnsureReqHubClosed
