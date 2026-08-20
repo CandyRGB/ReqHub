@@ -90,6 +90,12 @@ When changing Freezed or JSON-serializable models, regenerate the related files:
 dart run build_runner build --delete-conflicting-outputs
 ```
 
+## AI-assisted development
+
+This repository includes [`AGENTS.md`](AGENTS.md), a portable project guide for Codex and other AI coding agents. It documents the architecture, development commands, data flow, and Flutter-specific conventions needed to work on ReqHub.
+
+Keep machine-specific agent settings, credentials, MCP configuration, and local tool caches outside the repository.
+
 ## Project structure
 
 ```text

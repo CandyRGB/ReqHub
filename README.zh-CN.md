@@ -90,6 +90,12 @@ flutter test
 dart run build_runner build --delete-conflicting-outputs
 ```
 
+## AI 辅助开发
+
+仓库包含 [`AGENTS.md`](AGENTS.md)，这是面向 Codex 和其他 AI 编程代理的可移植项目指南，记录了 ReqHub 的架构、开发命令、数据流和 Flutter 约定。
+
+机器相关的代理设置、凭据、MCP 配置和本地工具缓存请保留在仓库之外。
+
 ## 项目结构
 
 ```text

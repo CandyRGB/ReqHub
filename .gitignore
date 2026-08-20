@@ -50,5 +50,4 @@ app.*.map.json
 .codex/
 .mcp.json
 .vscode/
-AGENTS.md
 CLAUDE.md
