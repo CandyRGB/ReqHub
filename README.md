@@ -1,6 +1,28 @@
-# ReqHub
+<p align="center">
+  <strong>ReqHub</strong>
+</p>
 
-ReqHub is a lightweight HTTP API client for Windows, built with Flutter and Fluent UI. It provides a focused workspace for organizing requests, configuring authentication and request bodies, sending HTTP calls, and inspecting responses.
+<p align="center">A lightweight HTTP API client for Windows.</p>
+
+<p align="center">
+  <a href="https://github.com/CandyRGB/ReqHub"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-CandyRGB%2FReqHub-181717?style=flat-square&logo=github" /></a>
+  <a href="https://flutter.dev"><img alt="Flutter" src="https://img.shields.io/badge/Flutter-Windows-02569B?style=flat-square&logo=flutter&logoColor=white" /></a>
+  <a href="https://dart.dev"><img alt="Dart" src="https://img.shields.io/badge/Dart-3.11%2B-0175C2?style=flat-square&logo=dart&logoColor=white" /></a>
+  <a href="https://github.com/CandyRGB/ReqHub/blob/main/pubspec.yaml"><img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-0078D4?style=flat-square&logo=windows&logoColor=white" /></a>
+</p>
+
+<p align="center">
+  <a href="#features">Features</a> ·
+  <a href="#getting-started">Getting started</a> ·
+  <a href="#development">Development</a> ·
+  <a href="docs/architecture.md">Architecture</a>
+</p>
+
+<p align="center">
+  English · <a href="README.zh-CN.md">简体中文</a>
+</p>
+
+ReqHub provides a focused workspace for organizing requests, configuring authentication and request bodies, sending HTTP calls, and inspecting responses.
 
 ## Features
 
