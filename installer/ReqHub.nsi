@@ -123,6 +123,8 @@ Section "ReqHub" SecReqHub
   SetShellVarContext all
   SetOutPath "$INSTDIR"
   File /r "${BUILD_DIR}\*"
+  ; Keep a dedicated icon file so shortcuts do not depend on the Windows EXE icon cache.
+  File "${APP_ICON}"
 
   FileOpen $0 "$INSTDIR\.reqhub-install" w
   FileWrite $0 "ReqHub ${APP_VERSION}$\r$\n"
@@ -131,7 +133,7 @@ Section "ReqHub" SecReqHub
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   CreateDirectory "$SMPROGRAMS\ReqHub"
-  CreateShortcut "$SMPROGRAMS\ReqHub\ReqHub.lnk" "$INSTDIR\${APP_EXE}" "" "$INSTDIR\${APP_EXE}" 0
+  CreateShortcut "$SMPROGRAMS\ReqHub\ReqHub.lnk" "$INSTDIR\${APP_EXE}" "" "$INSTDIR\app_icon.ico" 0
   CreateShortcut "$SMPROGRAMS\ReqHub\Uninstall ReqHub.lnk" "$INSTDIR\Uninstall.exe"
 
   WriteRegStr HKLM "${APP_REGISTRY_KEY}" "InstallDir" "$INSTDIR"
@@ -155,7 +157,7 @@ SectionEnd
 
 Section /o "$(DesktopShortcut)" SecDesktopShortcut
   SetShellVarContext all
-  CreateShortcut "$DESKTOP\ReqHub.lnk" "$INSTDIR\${APP_EXE}" "" "$INSTDIR\${APP_EXE}" 0
+  CreateShortcut "$DESKTOP\ReqHub.lnk" "$INSTDIR\${APP_EXE}" "" "$INSTDIR\app_icon.ico" 0
 SectionEnd
 
 Function un.onInit
@@ -203,6 +205,7 @@ marker_found:
   Delete "$INSTDIR\flutter_windows.dll"
   Delete "$INSTDIR\url_launcher_windows_plugin.dll"
   Delete "$INSTDIR\native_assets.json"
+  Delete "$INSTDIR\app_icon.ico"
   RMDir /r "$INSTDIR\data"
   Delete "$INSTDIR\.reqhub-install"
   Delete "$INSTDIR\Uninstall.exe"
