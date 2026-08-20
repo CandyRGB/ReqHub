@@ -73,6 +73,20 @@ To create a Windows release build:
 flutter build windows
 ```
 
+Build the Windows installer with NSIS:
+
+```powershell
+.\scripts\build_installer.ps1
+```
+
+The installer is written to `dist\ReqHub-Setup-<version>-x64.exe`. It defaults
+to `C:\Program Files\ReqHub`, allows the destination to be changed, and requires
+administrator privileges. If NSIS is not on `PATH`, pass its compiler path:
+
+```powershell
+.\scripts\build_installer.ps1 -MakeNsisPath "D:\Tools\NSIS\makensis.exe"
+```
+
 The application stores user data and settings under `%APPDATA%\ReqHub\` by default.
 
 ## Development

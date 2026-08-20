@@ -73,6 +73,20 @@ flutter run -d windows
 flutter build windows
 ```
 
+使用 NSIS 构建 Windows 安装包：
+
+```powershell
+.\scripts\build_installer.ps1
+```
+
+安装包输出到 `dist\ReqHub-Setup-<版本>-x64.exe`。默认安装目录为
+`C:\Program Files\ReqHub`，安装界面允许修改路径，安装和卸载需要管理员权限。
+如果 NSIS 没有加入 `PATH`，可显式指定编译器：
+
+```powershell
+.\scripts\build_installer.ps1 -MakeNsisPath "D:\Tools\NSIS\makensis.exe"
+```
+
 应用默认将用户数据和设置保存到 `%APPDATA%\ReqHub\`。
 
 ## 开发
