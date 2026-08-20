@@ -1,7 +1,7 @@
 name: reqhub
 description: "A Postman-like HTTP API client for Windows, built with Flutter and fluent_ui."
 publish_to: 'none'
-version: 1.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: ^3.11.5
