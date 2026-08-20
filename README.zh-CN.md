@@ -39,6 +39,20 @@ ReqHub 提供一个专注的工作区，用于组织请求、配置认证和请�
 - 支持浅色、深色和跟随系统主题。
 - 支持简体中文和英语界面。
 
+## 页面截图
+
+### 工作区
+
+![ReqHub 空白工作区](assets/screenshots/empty-state.png)
+
+### 认证配置
+
+![ReqHub 认证编辑器](assets/screenshots/auth-basic.png)
+
+### 二进制请求体
+
+![ReqHub 二进制请求体](assets/screenshots/request-binary.png)
+
 ## 环境要求
 
 - Windows 10 或更高版本

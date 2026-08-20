@@ -39,6 +39,20 @@ ReqHub provides a focused workspace for organizing requests, configuring authent
 - Use light, dark, or system theme settings.
 - Localized English and Simplified Chinese interface.
 
+## Screenshots
+
+### Workspace
+
+![ReqHub empty workspace](assets/screenshots/empty-state.png)
+
+### Authentication
+
+![ReqHub authentication editor](assets/screenshots/auth-basic.png)
+
+### Binary request body
+
+![ReqHub binary request body](assets/screenshots/request-binary.png)
+
 ## Requirements
 
 - Windows 10 or later
