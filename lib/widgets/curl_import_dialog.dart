@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../extensions/localization_ext.dart';
 import '../models/http_request.dart';
 import '../services/curl_parser.dart';
+import 'global_message.dart';
 
 /// Shows the "Import cURL" dialog and returns the parsed request, or null if
 /// the user cancels. Invalid input keeps the dialog open with an inline error
@@ -23,7 +24,6 @@ class CurlImportDialog extends StatefulWidget {
 
 class _CurlImportDialogState extends State<CurlImportDialog> {
   final _controller = TextEditingController();
-  String? _error;
 
   @override
   void dispose() {
@@ -34,15 +34,22 @@ class _CurlImportDialogState extends State<CurlImportDialog> {
   void _import() {
     final text = _controller.text.trim();
     if (text.isEmpty) {
-      setState(() => _error = context.l10n.sidebar_curl_invalid);
+      showGlobalMessage(
+        context,
+        context.l10n.sidebar_curl_invalid,
+        isError: true,
+      );
       return;
     }
     try {
       final parsed = CurlParser.parse(text);
       Navigator.pop(context, parsed);
     } catch (_) {
-      // Keep the dialog open so the user can fix the command.
-      setState(() => _error = context.l10n.sidebar_curl_invalid);
+      showGlobalMessage(
+        context,
+        context.l10n.sidebar_curl_invalid,
+        isError: true,
+      );
     }
   }
 
@@ -88,23 +95,8 @@ class _CurlImportDialogState extends State<CurlImportDialog> {
                 textAlignVertical: TextAlignVertical.top,
                 maxLines: null,
                 expands: true,
-                onChanged: (_) {
-                  // Clear the error once the user starts editing again.
-                  if (_error != null) setState(() => _error = null);
-                },
               ),
             ),
-            if (_error != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    _error!,
-                    style: TextStyle(fontSize: 12, color: cs.error),
-                  ),
-                ),
-              ),
           ],
         ),
       ),

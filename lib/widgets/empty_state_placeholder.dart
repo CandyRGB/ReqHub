@@ -6,6 +6,7 @@ import '../extensions/localization_ext.dart';
 import '../models/http_request.dart';
 import '../providers/providers.dart';
 import 'curl_import_dialog.dart';
+import 'global_message.dart';
 
 /// Empty state shown in the main area when no request tab is open.
 /// Guides the user to create a request, a collection, or import a cURL
@@ -25,7 +26,9 @@ class _EmptyStatePlaceholderState extends ConsumerState<EmptyStatePlaceholder> {
       name: context.l10n.default_request_name,
       method: 'GET',
     );
-    final newId = ref.read(collectionsProvider.notifier).addRequest(null, blank);
+    final newId = ref
+        .read(collectionsProvider.notifier)
+        .addRequest(null, blank);
     final req = ref.read(collectionsProvider.notifier).findRequest(newId);
     if (req != null) {
       ref.read(requestTabsProvider.notifier).openTab(req);
@@ -49,9 +52,7 @@ class _EmptyStatePlaceholderState extends ConsumerState<EmptyStatePlaceholder> {
       ref.read(requestTabsProvider.notifier).openTab(req);
     }
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.l10n.sidebar_curl_success)),
-    );
+    showGlobalMessage(context, context.l10n.sidebar_curl_success);
   }
 
   @override
@@ -73,21 +74,21 @@ class _EmptyStatePlaceholderState extends ConsumerState<EmptyStatePlaceholder> {
           style: TextStyle(fontSize: 15, color: cs.onSurfaceVariant),
         ),
         const SizedBox(height: 24),
-        Row(
-          mainAxisSize: MainAxisSize.min,
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 8,
+          runSpacing: 8,
           children: [
             FilledButton.tonalIcon(
               onPressed: _newRequest,
               icon: const Icon(FluentIcons.add_16_regular, size: 16),
               label: Text(context.l10n.context_new_request),
             ),
-            const SizedBox(width: 8),
             FilledButton.tonalIcon(
               onPressed: _newCollection,
               icon: const Icon(FluentIcons.folder_add_20_regular, size: 16),
               label: Text(context.l10n.context_new_collection),
             ),
-            const SizedBox(width: 8),
             FilledButton.tonalIcon(
               onPressed: _importCurl,
               icon: const Icon(FluentIcons.code_20_regular, size: 16),

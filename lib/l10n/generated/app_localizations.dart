@@ -482,6 +482,12 @@ abstract class AppLocalizations {
   /// **'Export as cURL'**
   String get context_export_curl;
 
+  /// No description provided for @curl_copied.
+  ///
+  /// In en, this message translates to:
+  /// **'cURL command copied'**
+  String get curl_copied;
+
   /// Context menu: duplicate selected item
   ///
   /// In en, this message translates to:
@@ -578,6 +584,12 @@ abstract class AppLocalizations {
   /// **'Binary file selection (drag & drop or browse)'**
   String get body_binary_hint;
 
+  /// No description provided for @body_binary_select_file.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose file'**
+  String get body_binary_select_file;
+
   /// Placeholder: no body configured
   ///
   /// In en, this message translates to:
@@ -661,6 +673,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send'**
   String get url_send;
+
+  /// No description provided for @url_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a request URL'**
+  String get url_required;
 
   /// Empty state: no request selected in editor area
   ///

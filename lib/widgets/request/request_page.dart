@@ -6,6 +6,7 @@ import '../../providers/providers.dart';
 import 'url_bar.dart';
 import 'request_tab.dart';
 import '../response/response_pane.dart';
+import '../global_message.dart';
 
 /// The body of a single request tab — request editor on top, response pane
 /// below.  Reads the active request and response from the shared providers
@@ -53,8 +54,17 @@ class _RequestEditor extends ConsumerWidget {
                 ref.read(requestTabsProvider.notifier).updateActiveMethod(m),
             onUrlChanged: (u) =>
                 ref.read(requestTabsProvider.notifier).updateActiveUrl(u),
-            onSend: () =>
-                ref.read(requestTabsProvider.notifier).sendActiveRequest(),
+            onSend: () {
+              if (request.url.trim().isEmpty) {
+                showGlobalMessage(
+                  context,
+                  context.l10n.url_required,
+                  isError: true,
+                );
+                return;
+              }
+              ref.read(requestTabsProvider.notifier).sendActiveRequest();
+            },
           ),
           const SizedBox(height: 8),
           Expanded(

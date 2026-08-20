@@ -75,6 +75,7 @@
   "context_new_request": "新建请求",
   "context_new_collection": "新建集合",
   "context_export_curl": "导出为 cURL",
+  "curl_copied": "cURL 命令已复制",
   "context_duplicate": "复制",
   "context_rename": "重命名",
   "context_delete": "删除",
@@ -93,6 +94,7 @@
   "body_raw_hint": "输入原始请求体...",
   "body_json_hint": "[\n  \"键\": \"值\"\n]",
   "body_binary_hint": "二进制文件选择（拖放或浏览）",
+  "body_binary_select_file": "选择文件",
   "body_no_body": "此请求没有请求体",
   "body_add_entry": "+ 添加条目",
   "body_key_header": "键",
@@ -110,6 +112,7 @@
 
   "url_placeholder": "请求 url",
   "url_send": "发送",
+  "url_required": "请输入请求 URL",
 
   "request_placeholder": "请选择一个请求或新建一个",
 

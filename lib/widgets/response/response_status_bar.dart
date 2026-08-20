@@ -35,6 +35,9 @@ class ResponseStatusBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final accent = _statusColor(statusCode);
+    final statusText = statusCode > 0
+        ? '$statusCode${statusMessage.isNotEmpty ? ' $statusMessage' : ''}'
+        : 'Error${statusMessage.isNotEmpty ? ': $statusMessage' : ''}';
 
     return Container(
       constraints: const BoxConstraints(minHeight: 36),
@@ -44,23 +47,25 @@ class ResponseStatusBar extends StatelessWidget {
         border: Border(bottom: BorderSide(color: cs.outlineVariant, width: 1)),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const Spacer(),
           // ── Status pill ─────────────────────────────────────
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: accent.withAlpha(20),
-              borderRadius: BorderRadius.circular(3),
-            ),
-            child: Text(
-              statusCode > 0
-                  ? '$statusCode${statusMessage.isNotEmpty ? ' $statusMessage' : ''}'
-                  : 'Error',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: accent,
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: accent.withAlpha(20),
+                borderRadius: BorderRadius.circular(3),
+              ),
+              child: Text(
+                statusText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: accent,
+                ),
               ),
             ),
           ),

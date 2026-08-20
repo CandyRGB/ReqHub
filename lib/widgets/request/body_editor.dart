@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart' hide FormField;
 import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:highlight/languages/json.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:path/path.dart' as path;
 
 import '../../extensions/localization_ext.dart';
 import '../../models/request_body.dart';
@@ -34,7 +37,8 @@ class _BodyEditorState extends State<BodyEditor> {
   void didUpdateWidget(covariant BodyEditor oldWidget) {
     super.didUpdateWidget(oldWidget);
     final newType = _typeOf(widget.body);
-    if (newType != _bodyType) {
+    if (newType != _bodyType ||
+        ((newType == 'json' || newType == 'raw') && _rawCtrl == null)) {
       _rawCtrl?.dispose();
       _bodyType = newType;
       _initCtrl();
@@ -102,6 +106,12 @@ class _BodyEditorState extends State<BodyEditor> {
     }
   }
 
+  Future<void> _pickBinaryFile() async {
+    final file = await openFile();
+    if (file == null || !mounted) return;
+    widget.onChanged(RequestBody.binary(filePath: file.path));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -154,7 +164,6 @@ class _BodyEditorState extends State<BodyEditor> {
             ],
           ),
         ),
-        const Divider(height: 1),
         Expanded(child: _buildBodyEditor()),
       ],
     );
@@ -181,14 +190,12 @@ class _BodyEditorState extends State<BodyEditor> {
                 controller: _rawCtrl!,
                 expands: true,
                 maxLines: null,
+                textAlignVertical: TextAlignVertical.top,
                 style: const TextStyle(
                   fontFamily: 'JetBrainsMono',
                   fontSize: 13,
                 ),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(12),
-                ),
+                decoration: _editorDecoration(context),
                 onChanged: (v) {
                   if (_bodyType == 'json') {
                     widget.onChanged(RequestBody.json(raw: v));
@@ -211,10 +218,48 @@ class _BodyEditorState extends State<BodyEditor> {
           onChanged: widget.onChanged,
         );
       case 'binary':
-        return Center(child: Text(context.l10n.body_binary_hint));
+        final filePath = switch (widget.body) {
+          BinaryBody(filePath: final selectedPath) => selectedPath,
+          _ => '',
+        };
+        final fileLabel = filePath.isEmpty
+            ? context.l10n.body_binary_select_file
+            : path.basename(filePath);
+        return Center(
+          child: Tooltip(
+            message: filePath,
+            child: FilledButton.tonalIcon(
+              onPressed: _pickBinaryFile,
+              icon: const Icon(FluentIcons.folder_open_16_regular, size: 18),
+              label: Text(fileLabel, overflow: TextOverflow.ellipsis),
+            ),
+          ),
+        );
       default:
         return Center(child: Text(context.l10n.body_no_body));
     }
+  }
+
+  InputDecoration _editorDecoration(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final radius = BorderRadius.circular(4);
+
+    return InputDecoration(
+      isDense: true,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      border: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.5)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.4)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: cs.primary, width: 1.5),
+      ),
+    );
   }
 }
 

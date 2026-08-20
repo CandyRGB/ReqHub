@@ -217,6 +217,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get context_export_curl => 'Export as cURL';
 
   @override
+  String get curl_copied => 'cURL command copied';
+
+  @override
   String get context_duplicate => 'Duplicate';
 
   @override
@@ -266,6 +269,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Binary file selection (drag & drop or browse)';
 
   @override
+  String get body_binary_select_file => 'Choose file';
+
+  @override
   String get body_no_body => 'This request does not have a body';
 
   @override
@@ -306,6 +312,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get url_send => 'Send';
+
+  @override
+  String get url_required => 'Please enter a request URL';
 
   @override
   String get request_placeholder => 'Select a request or create a new one';

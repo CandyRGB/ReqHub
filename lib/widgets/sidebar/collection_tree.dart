@@ -7,11 +7,13 @@ import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../extensions/localization_ext.dart';
 import '../../models/collection.dart';
 import '../../models/http_request.dart';
 import '../../providers/providers.dart';
 import '../../services/curl_generator.dart';
 import '../context_menu.dart';
+import '../global_message.dart';
 import 'tree_context_menu.dart';
 import 'tree_drag_handler.dart';
 import 'tree_entry.dart';
@@ -281,9 +283,14 @@ class _CollectionTreeState extends ConsumerState<CollectionTree> {
           : () {
               final req = _findRequest(entry.id);
               if (req != null) {
+                final copiedMessage = context.l10n.curl_copied;
                 Clipboard.setData(
                   ClipboardData(text: CurlGenerator.generate(req)),
-                );
+                ).then((_) {
+                  if (mounted) {
+                    showGlobalMessage(context, copiedMessage);
+                  }
+                });
               }
             },
       onDuplicate: () {

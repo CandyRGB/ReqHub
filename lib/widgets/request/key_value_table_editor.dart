@@ -90,9 +90,6 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
   @override
   void dispose() {
     _disposeRows();
-    for (final row in _rows) {
-      row.dispose();
-    }
     super.dispose();
   }
 

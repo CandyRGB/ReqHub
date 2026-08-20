@@ -139,6 +139,7 @@
   "context_new_collection": "New Collection",
   "@context_export_curl": {"description": "Context menu: export request as cURL"},
   "context_export_curl": "Export as cURL",
+  "curl_copied": "cURL command copied",
   "@context_duplicate": {"description": "Context menu: duplicate selected item"},
   "context_duplicate": "Duplicate",
   "@context_rename": {"description": "Context menu: rename selected item"},
@@ -173,6 +174,7 @@
   "body_json_hint": "[\n  \"key\": \"value\"\n]",
   "@body_binary_hint": {"description": "Placeholder: binary file body"},
   "body_binary_hint": "Binary file selection (drag & drop or browse)",
+  "body_binary_select_file": "Choose file",
   "@body_no_body": {"description": "Placeholder: no body configured"},
   "body_no_body": "This request does not have a body",
   "@body_add_entry": {"description": "Button: add key-value entry in form body editor"},
@@ -204,6 +206,7 @@
   "url_placeholder": "Request URL",
   "@url_send": {"description": "Button: send the HTTP request"},
   "url_send": "Send",
+  "url_required": "Please enter a request URL",
 
   "@request_placeholder": {"description": "Empty state: no request selected in editor area"},
   "request_placeholder": "Select a request or create a new one",

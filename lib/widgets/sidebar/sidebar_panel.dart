@@ -8,6 +8,7 @@ import '../../models/http_request.dart';
 import '../../providers/providers.dart';
 import '../compact_menu_item.dart';
 import '../curl_import_dialog.dart';
+import '../global_message.dart';
 import 'collection_tree.dart';
 
 /// The left sidebar: title, toolbar, collection tree, settings link.
@@ -174,9 +175,7 @@ class _SidebarPanelState extends ConsumerState<SidebarPanel> {
     final persisted = colNotifier.findRequest(newId);
     ref.read(requestTabsProvider.notifier).openTab(persisted ?? parsed);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.l10n.sidebar_curl_success)),
-    );
+    showGlobalMessage(context, context.l10n.sidebar_curl_success);
   }
 
   // ─── Build ────────────────────────────────────────────────────────

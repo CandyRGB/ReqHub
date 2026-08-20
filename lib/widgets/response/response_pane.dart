@@ -34,11 +34,14 @@ class ResponsePane extends ConsumerWidget {
                 return Center(
                   child: Text(
                     context.l10n.response_placeholder,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: cs.onSurfaceVariant,
-                    ),
+                    style: TextStyle(fontSize: 14, color: cs.onSurfaceVariant),
                   ),
+                );
+              }
+              if (response.statusCode == 0) {
+                return _ErrorResponseView(
+                  message: response.statusMessage,
+                  durationMs: response.durationMs,
                 );
               }
               return _ResponseView(response: response);
@@ -47,19 +50,31 @@ class ResponsePane extends ConsumerWidget {
               alignment: Alignment.topCenter,
               child: LinearProgressIndicator(),
             ),
-            error: (e, _) => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: SingleChildScrollView(
-                  child: SelectableText(
-                    context.l10n.response_error(_formatError(e)),
-                    style: TextStyle(color: cs.error),
-                  ),
-                ),
-              ),
-            ),
+            error: (e, _) => _ErrorResponseView(message: _formatError(e)),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _ErrorResponseView extends StatelessWidget {
+  final String message;
+  final int durationMs;
+
+  const _ErrorResponseView({required this.message, this.durationMs = 0});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ResponseStatusBar(
+          statusCode: 0,
+          statusMessage: message,
+          durationMs: durationMs,
+          responseSize: 0,
+        ),
+        const Expanded(child: SizedBox.shrink()),
       ],
     );
   }

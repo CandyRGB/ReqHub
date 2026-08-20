@@ -217,6 +217,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get context_export_curl => '导出为 cURL';
 
   @override
+  String get curl_copied => 'cURL 命令已复制';
+
+  @override
   String get context_duplicate => '复制';
 
   @override
@@ -265,6 +268,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get body_binary_hint => '二进制文件选择（拖放或浏览）';
 
   @override
+  String get body_binary_select_file => '选择文件';
+
+  @override
   String get body_no_body => '此请求没有请求体';
 
   @override
@@ -305,6 +311,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get url_send => '发送';
+
+  @override
+  String get url_required => '请输入请求 URL';
 
   @override
   String get request_placeholder => '请选择一个请求或新建一个';

@@ -178,7 +178,6 @@ class _AuthEditorState extends State<AuthEditor> {
             ],
           ),
         ),
-        const Divider(height: 1),
         Expanded(child: _buildAuthFields()),
       ],
     );
@@ -191,16 +190,16 @@ class _AuthEditorState extends State<AuthEditor> {
       return const SizedBox.shrink();
     }
     return switch (widget.auth) {
-      BasicAuth auth => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
+      BasicAuth auth => _centeredFields(
+        Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             _LabeledField(
               label: context.l10n.auth_username,
               child: TextField(
                 controller: _ctrl1,
                 onChanged: (v) => widget.onChanged(auth.copyWith(username: v)),
-                decoration: _fieldDecoration(),
+                decoration: _fieldDecoration(context),
               ),
             ),
             const SizedBox(height: 10),
@@ -210,28 +209,27 @@ class _AuthEditorState extends State<AuthEditor> {
                 controller: _ctrl2,
                 obscureText: true,
                 onChanged: (v) => widget.onChanged(auth.copyWith(password: v)),
-                decoration: _fieldDecoration(),
+                decoration: _fieldDecoration(context),
               ),
             ),
           ],
         ),
       ),
-      BearerAuth auth => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: _LabeledField(
+      BearerAuth auth => _centeredFields(
+        _LabeledField(
           label: context.l10n.auth_token,
           child: TextField(
             controller: _ctrl1,
             onChanged: (v) => widget.onChanged(auth.copyWith(token: v)),
-            decoration: _fieldDecoration().copyWith(
-              hintText: context.l10n.auth_token_hint,
-            ),
+            decoration: _fieldDecoration(
+              context,
+            ).copyWith(hintText: context.l10n.auth_token_hint),
           ),
         ),
       ),
-      ApiKeyAuth auth => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
+      ApiKeyAuth auth => _centeredFields(
+        Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
@@ -269,7 +267,7 @@ class _AuthEditorState extends State<AuthEditor> {
               child: TextField(
                 controller: _ctrl1,
                 onChanged: (v) => widget.onChanged(auth.copyWith(key: v)),
-                decoration: _fieldDecoration(),
+                decoration: _fieldDecoration(context),
               ),
             ),
             const SizedBox(height: 10),
@@ -278,7 +276,7 @@ class _AuthEditorState extends State<AuthEditor> {
               child: TextField(
                 controller: _ctrl2,
                 onChanged: (v) => widget.onChanged(auth.copyWith(value: v)),
-                decoration: _fieldDecoration(),
+                decoration: _fieldDecoration(context),
               ),
             ),
           ],
@@ -294,11 +292,39 @@ class _AuthEditorState extends State<AuthEditor> {
     };
   }
 
-  static InputDecoration _fieldDecoration() => const InputDecoration(
-    isDense: true,
-    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-    border: InputBorder.none,
-  );
+  Widget _centeredFields(Widget child) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 760),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: SizedBox(width: double.infinity, child: child),
+        ),
+      ),
+    );
+  }
+
+  InputDecoration _fieldDecoration(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    const radius = BorderRadius.all(Radius.circular(4));
+
+    return InputDecoration(
+      isDense: true,
+      contentPadding: const EdgeInsets.all(12),
+      border: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.5)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.4)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: cs.primary, width: 1.5),
+      ),
+    );
+  }
 }
 
 /// A row with a label on the left and a field on the right.
