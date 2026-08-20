@@ -1,0 +1,67 @@
+name: reqhub
+description: "A Postman-like HTTP API client for Windows, built with Flutter and fluent_ui."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Windows Fluent Design UI
+
+  # State management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # HTTP client
+  dio: ^5.8.0+1
+
+  # Routing
+  go_router: ^15.1.2
+
+  # Data models
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  uuid: ^4.5.1
+
+  # File system
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # Utilities
+  collection: ^1.19.1
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  flutter_code_editor: ^0.3.5
+  flutter_highlight: ^0.7.0
+  highlight: ^0.7.0
+  fluentui_system_icons: ^1.1.273
+  file_selector: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+  # Code generation
+  build_runner: ^2.4.15
+  freezed: ^2.5.8
+  json_serializable: ^6.9.4
+  riverpod_generator: ^2.6.3
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  fonts:
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Regular.ttf
+        - asset: assets/fonts/JetBrainsMono-Bold.ttf
+          weight: 700
