@@ -45,14 +45,6 @@ ReqHub provides a focused workspace for organizing requests, configuring authent
 
 ![ReqHub current workspace](assets/screenshots/current-app.png)
 
-### Authentication
-
-![ReqHub authentication editor](assets/screenshots/auth-basic.png)
-
-### Binary request body
-
-![ReqHub binary request body](assets/screenshots/request-binary.png)
-
 ## Requirements
 
 - Windows 10 or later
