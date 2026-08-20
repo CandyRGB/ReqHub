@@ -43,7 +43,7 @@ ReqHub 提供一个专注的工作区，用于组织请求、配置认证和请�
 
 ### 工作区
 
-![ReqHub 空白工作区](assets/screenshots/empty-state.png)
+![ReqHub 当前工作区](assets/screenshots/current-app.png)
 
 ### 认证配置
 

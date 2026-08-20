@@ -43,7 +43,7 @@ ReqHub provides a focused workspace for organizing requests, configuring authent
 
 ### Workspace
 
-![ReqHub empty workspace](assets/screenshots/empty-state.png)
+![ReqHub current workspace](assets/screenshots/current-app.png)
 
 ### Authentication
 
