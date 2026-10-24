@@ -48,7 +48,7 @@ ReqHub 提供一个专注的工作区，用于组织请求、配置认证和请�
 ## 环境要求
 
 - Windows 10 或更高版本
-- 兼容 Dart `^3.11.5` 的 Flutter SDK
+- Flutter 3.41 或更高版本，兼容 Dart `^3.11.5`
 - 安装 **Desktop development with C++** 工作负载的 Visual Studio
 
 ## 开始使用

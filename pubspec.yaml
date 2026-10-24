@@ -1,10 +1,11 @@
 name: reqhub
 description: "A Postman-like HTTP API client for Windows, built with Flutter and fluent_ui."
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ^3.11.5
+  flutter: '>=3.41.0'
 
 dependencies:
   flutter:
@@ -59,7 +60,14 @@ flutter:
   uses-material-design: true
   generate: true
 
+  assets:
+    - assets/fonts/NotoSansSC-OFL.txt
+
   fonts:
+    # A variable face: Flutter 3.41+ selects its native wght axis via FontWeight.
+    - family: ReqHubSans
+      fonts:
+        - asset: assets/fonts/NotoSansSC-Variable.ttf
     - family: JetBrainsMono
       fonts:
         - asset: assets/fonts/JetBrainsMono-Regular.ttf

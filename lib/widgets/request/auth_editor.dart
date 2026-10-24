@@ -305,24 +305,9 @@ class _AuthEditorState extends State<AuthEditor> {
   }
 
   InputDecoration _fieldDecoration(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    const radius = BorderRadius.all(Radius.circular(4));
-
-    return InputDecoration(
+    return const InputDecoration(
       isDense: true,
-      contentPadding: const EdgeInsets.all(12),
-      border: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.5)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.4)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(color: cs.primary, width: 1.5),
-      ),
+      contentPadding: EdgeInsets.all(12),
     );
   }
 }

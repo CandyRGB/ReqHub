@@ -38,7 +38,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 context.l10n.settings_title,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
@@ -48,7 +48,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         // ─── Content ─────────────────────────────────────────────
         Expanded(
           child: Container(
-            color: cs.surfaceContainer,
+            color: cs.surfaceContainerLow,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -128,38 +128,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 .map(
                                   (seed) => Padding(
                                     padding: const EdgeInsets.only(left: 6),
-                                    child: GestureDetector(
+                                    child: _ThemeColorOption(
+                                      label: seed.label,
+                                      color: cs.brightness == Brightness.dark
+                                          ? seed.dark
+                                          : seed.light,
+                                      selected:
+                                          appSettings.themeSeedColor ==
+                                          seed.value,
                                       onTap: () => ref
                                           .read(settingsProvider.notifier)
                                           .setThemeSeed(seed.value),
-                                      child: Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                          color: Color(seed.value),
-                                          shape: BoxShape.circle,
-                                          border:
-                                              appSettings.themeSeedColor ==
-                                                  seed.value
-                                              ? Border.all(
-                                                  color: cs.surface,
-                                                  width: 2,
-                                                )
-                                              : null,
-                                          boxShadow:
-                                              appSettings.themeSeedColor ==
-                                                  seed.value
-                                              ? [
-                                                  BoxShadow(
-                                                    color: Color(
-                                                      seed.value,
-                                                    ).withValues(alpha: 0.5),
-                                                    blurRadius: 4,
-                                                  ),
-                                                ]
-                                              : null,
-                                        ),
-                                      ),
                                     ),
                                   ),
                                 )
@@ -292,11 +271,9 @@ class _SettingsGroup extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: cs.surface,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Theme.of(context).dividerColor.withValues(alpha: 0.4),
-        ),
+        border: Border.all(color: cs.outlineVariant),
       ),
       child: Column(
         children: [
@@ -308,8 +285,8 @@ class _SettingsGroup extends StatelessWidget {
                   Text(
                     title!,
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   const Spacer(),
@@ -443,7 +420,6 @@ class _TimeoutFieldState extends State<_TimeoutField> {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
     return TextField(
       controller: _controller,
       keyboardType: TextInputType.number,
@@ -452,20 +428,64 @@ class _TimeoutFieldState extends State<_TimeoutField> {
       decoration: InputDecoration(
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
-          borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.5)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
-          borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.4)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
-          borderSide: BorderSide(color: cs.primary, width: 1),
-        ),
       ),
       onChanged: widget.onChanged,
+    );
+  }
+}
+
+class _ThemeColorOption extends StatelessWidget {
+  final String label;
+  final Color color;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _ThemeColorOption({
+    required this.label,
+    required this.color,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Semantics(
+      label: label,
+      button: true,
+      selected: selected,
+      child: Tooltip(
+        message: label,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(6),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              width: 32,
+              height: 32,
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: selected ? cs.primary : Colors.transparent,
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: selected
+                    ? Icon(Icons.check_rounded, size: 16, color: cs.onPrimary)
+                    : null,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -48,7 +48,7 @@ ReqHub provides a focused workspace for organizing requests, configuring authent
 ## Requirements
 
 - Windows 10 or later
-- Flutter SDK compatible with Dart `^3.11.5`
+- Flutter 3.41 or newer, compatible with Dart `^3.11.5`
 - Visual Studio with the **Desktop development with C++** workload
 
 ## Getting started

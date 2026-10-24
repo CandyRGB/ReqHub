@@ -7,6 +7,7 @@ import 'package:highlight/languages/json.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:path/path.dart' as path;
 
+import '../../config/colors.dart';
 import '../../extensions/localization_ext.dart';
 import '../../models/request_body.dart';
 import '../../models/key_value_pair.dart';
@@ -178,11 +179,29 @@ class _BodyEditorState extends State<BodyEditor> {
       case 'raw':
         if (_rawCtrl == null) return const SizedBox.shrink();
         final isDark = Theme.of(context).brightness == Brightness.dark;
+        final cs = Theme.of(context).colorScheme;
         return Material(
           type: MaterialType.transparency,
           child: CodeTheme(
             data: CodeThemeData(
-              styles: isDark ? atomOneDarkTheme : githubTheme,
+              styles: {
+                ...(isDark ? atomOneDarkTheme : githubTheme),
+                'root': TextStyle(
+                  color: cs.onSurface,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).inputDecorationTheme.fillColor,
+                ),
+                'attr': TextStyle(color: cs.onSurfaceVariant),
+                'string': TextStyle(
+                  color: httpMethodColor('POST', cs.brightness),
+                ),
+                'number': TextStyle(
+                  color: httpMethodColor('PUT', cs.brightness),
+                ),
+                'literal': TextStyle(color: cs.primary),
+                'keyword': TextStyle(color: cs.primary),
+              },
             ),
             child: _CodeEditorActions(
               controller: _rawCtrl!,
@@ -241,24 +260,9 @@ class _BodyEditorState extends State<BodyEditor> {
   }
 
   InputDecoration _editorDecoration(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final radius = BorderRadius.circular(4);
-
-    return InputDecoration(
+    return const InputDecoration(
       isDense: true,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      border: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.5)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(color: cs.outline.withValues(alpha: 0.4)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: BorderSide(color: cs.primary, width: 1.5),
-      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
     );
   }
 }

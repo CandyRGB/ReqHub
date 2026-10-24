@@ -58,25 +58,26 @@ class _UrlBarState extends State<UrlBar> {
           // Method selector
           SizedBox(
             width: 124,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: radius,
-                border: Border.all(color: cs.outline.withValues(alpha: 0.3)),
-              ),
-              child: MenuButton<String>(
-                value: widget.method,
-                borderRadius: BorderRadius.zero,
-                items: const [
-                  (value: 'GET', label: 'GET', color: methodGet),
-                  (value: 'POST', label: 'POST', color: methodPost),
-                  (value: 'PUT', label: 'PUT', color: methodPut),
-                  (value: 'PATCH', label: 'PATCH', color: methodPatch),
-                  (value: 'DELETE', label: 'DELETE', color: methodDelete),
-                  (value: 'HEAD', label: 'HEAD', color: methodHead),
-                  (value: 'OPTIONS', label: 'OPTIONS', color: methodOptions),
-                ],
-                onChanged: (m) => widget.onMethodChanged(m),
-              ),
+            child: MenuButton<String>(
+              value: widget.method,
+              borderRadius: radius,
+              items: [
+                for (final method in [
+                  'GET',
+                  'POST',
+                  'PUT',
+                  'PATCH',
+                  'DELETE',
+                  'HEAD',
+                  'OPTIONS',
+                ])
+                  (
+                    value: method,
+                    label: method,
+                    color: httpMethodColor(method, cs.brightness),
+                  ),
+              ],
+              onChanged: (m) => widget.onMethodChanged(m),
             ),
           ),
           const SizedBox(width: 8),
@@ -91,22 +92,6 @@ class _UrlBarState extends State<UrlBar> {
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 12,
                   vertical: 10,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: radius,
-                  borderSide: BorderSide(
-                    color: cs.outline.withValues(alpha: 0.5),
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: radius,
-                  borderSide: BorderSide(
-                    color: cs.outline.withValues(alpha: 0.4),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: radius,
-                  borderSide: BorderSide(color: cs.primary, width: 1.5),
                 ),
               ),
             ),

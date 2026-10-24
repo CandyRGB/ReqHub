@@ -17,14 +17,6 @@ class ResponseStatusBar extends StatelessWidget {
     required this.responseSize,
   });
 
-  Color _statusColor(int code) {
-    if (code >= 200 && code < 300) return statusSuccess;
-    if (code >= 300 && code < 400) return statusRedirect;
-    if (code >= 400 && code < 500) return statusClientError;
-    if (code >= 500) return statusServerError;
-    return statusDefault;
-  }
-
   String _formatSize(int bytes) {
     if (bytes < 1024) return '$bytes B';
     if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
@@ -34,7 +26,7 @@ class ResponseStatusBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final accent = _statusColor(statusCode);
+    final accent = httpStatusColor(statusCode, cs.brightness);
     final statusText = statusCode > 0
         ? '$statusCode${statusMessage.isNotEmpty ? ' $statusMessage' : ''}'
         : 'Error${statusMessage.isNotEmpty ? ': $statusMessage' : ''}';

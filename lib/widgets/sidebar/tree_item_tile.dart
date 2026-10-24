@@ -31,25 +31,14 @@ class TreeItemTile extends StatelessWidget {
     this.onDragStarted,
   });
 
-  Color _methodColor(String m) => switch (m) {
-    'GET' => methodGet,
-    'POST' => methodPost,
-    'PUT' => methodPut,
-    'PATCH' => methodPatch,
-    'DELETE' => methodDelete,
-    'HEAD' => methodHead,
-    'OPTIONS' => methodOptions,
-    _ => methodDefault,
-  };
-
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final indent = entry.depth * 16.0;
     final bgColor = isSelected
-        ? cs.primary.withValues(alpha: 0.12)
+        ? cs.primaryContainer
         : isHovered
-        ? cs.primary.withValues(alpha: 0.04)
+        ? cs.onSurface.withValues(alpha: 0.04)
         : null;
 
     return GestureDetector(
@@ -81,7 +70,11 @@ class TreeItemTile extends StatelessWidget {
             ),
             // Folder icon
             if (entry.isCollection) ...[
-              Icon(FluentIcons.folder_16_regular, size: 16, color: cs.primary),
+              Icon(
+                FluentIcons.folder_16_regular,
+                size: 16,
+                color: cs.onSurfaceVariant,
+              ),
               const SizedBox(width: 6),
             ],
             // Label
@@ -108,7 +101,7 @@ class TreeItemTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: _methodColor(entry.method!),
+                  color: httpMethodColor(entry.method!, cs.brightness),
                 ),
               ),
             ],

@@ -96,7 +96,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         Container(
           width: 44,
           decoration: BoxDecoration(
-            color: cs.surfaceContainerLow,
+            color: cs.surfaceContainer,
             border: Border(
               right: BorderSide(color: cs.outlineVariant, width: 1),
             ),

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
+import '../config/colors.dart';
+
 OverlayEntry? _activeMessage;
 Timer? _dismissTimer;
 
@@ -22,12 +24,10 @@ void showGlobalMessage(
   final entry = OverlayEntry(
     builder: (overlayContext) {
       final colors = Theme.of(overlayContext).colorScheme;
-      final background = isError
-          ? colors.errorContainer
-          : colors.inverseSurface;
-      final foreground = isError
-          ? colors.onErrorContainer
-          : colors.onInverseSurface;
+      final foreground = colors.onSurface;
+      final iconColor = isError
+          ? colors.error
+          : httpStatusColor(200, colors.brightness);
 
       return Positioned(
         left: 16,
@@ -41,9 +41,13 @@ void showGlobalMessage(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 720),
               child: Material(
-                color: background,
+                color: colors.surface,
                 elevation: 4,
-                borderRadius: BorderRadius.circular(4),
+                surfaceTintColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  side: BorderSide(color: colors.outlineVariant),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -56,7 +60,7 @@ void showGlobalMessage(
                             ? FluentIcons.error_circle_16_regular
                             : FluentIcons.checkmark_circle_16_regular,
                         size: 18,
-                        color: foreground,
+                        color: iconColor,
                       ),
                       const SizedBox(width: 8),
                       Expanded(

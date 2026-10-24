@@ -6,10 +6,10 @@ import '../../extensions/localization_ext.dart';
 import '../../models/collection.dart';
 import '../../models/http_request.dart';
 import '../../providers/providers.dart';
-import '../compact_menu_item.dart';
 import '../curl_import_dialog.dart';
 import '../global_message.dart';
 import 'collection_tree.dart';
+import 'create_split_button.dart';
 
 /// The left sidebar: title, toolbar, collection tree, settings link.
 class SidebarPanel extends ConsumerStatefulWidget {
@@ -217,7 +217,7 @@ class _SidebarPanelState extends ConsumerState<SidebarPanel> {
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Row(
               children: [
-                _CreateSplitButton(
+                CreateSplitButton(
                   onNewRequest: _newRequest,
                   onNewCollection: _newCollection,
                   onImportCurl: _importCurl,
@@ -270,124 +270,6 @@ class _SidebarPanelState extends ConsumerState<SidebarPanel> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Split button for "create" actions: main tap creates a new request;
-/// the dropdown arrow opens a menu with New Request / New Collection / Import cURL.
-class _CreateSplitButton extends StatelessWidget {
-  final VoidCallback onNewRequest;
-  final VoidCallback onNewCollection;
-  final VoidCallback onImportCurl;
-
-  const _CreateSplitButton({
-    required this.onNewRequest,
-    required this.onNewCollection,
-    required this.onImportCurl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          FilledButton.tonal(
-            onPressed: onNewRequest,
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-              minimumSize: Size.zero,
-              visualDensity: VisualDensity.compact,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.horizontal(left: Radius.circular(6)),
-              ),
-            ),
-            child: const Icon(FluentIcons.add_16_regular, size: 18),
-          ),
-          const SizedBox(width: 1),
-          _SplitMenuAnchor(
-            onNewRequest: onNewRequest,
-            onNewCollection: onNewCollection,
-            onImportCurl: onImportCurl,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The dropdown-arrow half of the split button.
-class _SplitMenuAnchor extends StatefulWidget {
-  final VoidCallback onNewRequest;
-  final VoidCallback onNewCollection;
-  final VoidCallback onImportCurl;
-
-  const _SplitMenuAnchor({
-    required this.onNewRequest,
-    required this.onNewCollection,
-    required this.onImportCurl,
-  });
-
-  @override
-  State<_SplitMenuAnchor> createState() => _SplitMenuAnchorState();
-}
-
-class _SplitMenuAnchorState extends State<_SplitMenuAnchor> {
-  final _menuController = MenuController();
-
-  @override
-  void dispose() {
-    _menuController.close();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MenuAnchor(
-      controller: _menuController,
-      menuChildren: [
-        CompactMenuItem(
-          leading: const Icon(FluentIcons.add_16_regular, size: 16),
-          label: context.l10n.context_new_request,
-          onTap: () {
-            widget.onNewRequest();
-            _menuController.close();
-          },
-        ),
-        CompactMenuItem(
-          leading: const Icon(FluentIcons.folder_add_20_regular, size: 16),
-          label: context.l10n.context_new_collection,
-          onTap: () {
-            widget.onNewCollection();
-            _menuController.close();
-          },
-        ),
-        CompactMenuItem(
-          leading: const Icon(FluentIcons.code_20_regular, size: 16),
-          label: context.l10n.sidebar_import_from_curl,
-          onTap: () {
-            widget.onImportCurl();
-            _menuController.close();
-          },
-        ),
-      ],
-      child: Material(
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        borderRadius: const BorderRadius.horizontal(right: Radius.circular(6)),
-        child: InkWell(
-          onTap: () => _menuController.open(),
-          borderRadius: const BorderRadius.horizontal(
-            right: Radius.circular(6),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Icon(FluentIcons.chevron_down_12_regular, size: 12),
-          ),
-        ),
       ),
     );
   }

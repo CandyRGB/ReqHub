@@ -53,49 +53,55 @@ class _MenuButtonState<T> extends State<MenuButton<T>> {
             },
           ),
       ],
-      child: InkWell(
-        borderRadius: br,
-        onTap: () {
-          if (_controller.isOpen) {
-            _controller.close();
-          } else {
-            _controller.open();
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-            borderRadius: br,
-            border: Border.all(color: cs.outline.withValues(alpha: 0.3)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              if (selected.color != null) ...[
-                _MethodDot(color: selected.color!),
-                const SizedBox(width: 6),
-              ],
-              Expanded(
-                child: Text(
-                  selected.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(
-                    fontSize: 14,
-                    color: selected.color,
-                  ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: br,
+          onTap: () {
+            if (_controller.isOpen) {
+              _controller.close();
+            } else {
+              _controller.open();
+            }
+          },
+          child: Ink(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: Theme.of(context).inputDecorationTheme.fillColor,
+              borderRadius: br,
+              border: Border.all(
+                color: Color.alphaBlend(
+                  cs.outline.withValues(alpha: 0.32),
+                  cs.surface,
                 ),
               ),
-              const SizedBox(width: 8),
-              Icon(
-                FluentIcons.chevron_down_12_regular,
-                size: 14,
-                color: cs.onSurfaceVariant,
-              ),
-            ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                if (selected.color != null) ...[
+                  _MethodDot(color: selected.color!),
+                  const SizedBox(width: 6),
+                ],
+                Expanded(
+                  child: Text(
+                    selected.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14,
+                      color: selected.color,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  FluentIcons.chevron_down_12_regular,
+                  size: 14,
+                  color: cs.onSurfaceVariant,
+                ),
+              ],
+            ),
           ),
         ),
       ),

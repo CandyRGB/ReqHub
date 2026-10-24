@@ -55,7 +55,6 @@ class _CurlImportDialogState extends State<CurlImportDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
     return AlertDialog(
       title: Text(context.l10n.sidebar_import_curl_title),
       content: SizedBox(
@@ -71,22 +70,6 @@ class _CurlImportDialogState extends State<CurlImportDialog> {
                   hintText: context.l10n.sidebar_import_curl_hint,
                   isDense: true,
                   contentPadding: const EdgeInsets.fromLTRB(8, 12, 8, 8),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                      color: cs.outline.withValues(alpha: 0.5),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                      color: cs.outline.withValues(alpha: 0.4),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(color: cs.primary, width: 1.5),
-                  ),
                 ),
                 style: const TextStyle(
                   fontFamily: 'JetBrainsMono',

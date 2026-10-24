@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+import 'config/app_theme.dart';
 import 'extensions/localization_ext.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'providers/providers.dart';
@@ -90,59 +91,6 @@ class _ReqHubAppState extends ConsumerState<ReqHubApp>
     );
   }
 
-  static const _desktopRadius = 4.0;
-  static const _desktopShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(_desktopRadius)),
-  );
-
-  static final _cjkFallback = [
-    'Microsoft YaHei', // Windows - Chinese mainland
-    'Source Han Sans SC', // alternate
-    'Noto Sans SC',
-    'sans-serif',
-  ];
-
-  ThemeData _buildTheme(Brightness brightness, Color seed) {
-    final base = ThemeData(
-      useMaterial3: true,
-      colorSchemeSeed: seed,
-      brightness: brightness,
-      cardTheme: CardThemeData(shape: _desktopShape),
-      dialogTheme: DialogThemeData(shape: _desktopShape),
-      menuTheme: const MenuThemeData(
-        style: MenuStyle(
-          shape: WidgetStatePropertyAll(_desktopShape),
-          visualDensity: VisualDensity.compact,
-          elevation: WidgetStatePropertyAll(0),
-        ),
-      ),
-      filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(shape: _desktopShape),
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(shape: _desktopShape),
-      ),
-      iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(shape: _desktopShape),
-      ),
-      inputDecorationTheme: const InputDecorationTheme(
-        border: InputBorder.none,
-        isDense: true,
-      ),
-      tabBarTheme: const TabBarThemeData(
-        indicatorSize: TabBarIndicatorSize.tab,
-        dividerHeight: 0,
-      ),
-    );
-
-    return base.copyWith(
-      textTheme: base.textTheme.apply(fontFamilyFallback: _cjkFallback),
-      primaryTextTheme: base.primaryTextTheme.apply(
-        fontFamilyFallback: _cjkFallback,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(appThemeProvider);
@@ -167,8 +115,8 @@ class _ReqHubAppState extends ConsumerState<ReqHubApp>
           child: child ?? const SizedBox.shrink(),
         );
       },
-      theme: _buildTheme(Brightness.light, themeSeed),
-      darkTheme: _buildTheme(Brightness.dark, themeSeed),
+      theme: buildAppTheme(Brightness.light, themeSeed),
+      darkTheme: buildAppTheme(Brightness.dark, themeSeed),
       routerConfig: _router,
     );
   }

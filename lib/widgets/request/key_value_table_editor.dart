@@ -20,6 +20,19 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../../models/key_value_pair.dart';
 
+// Table cells use the grid as their border, including when focused.
+const _cellDecoration = InputDecoration(
+  isDense: true,
+  filled: false,
+  contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+  border: InputBorder.none,
+  enabledBorder: InputBorder.none,
+  focusedBorder: InputBorder.none,
+  disabledBorder: InputBorder.none,
+  errorBorder: InputBorder.none,
+  focusedErrorBorder: InputBorder.none,
+);
+
 /// A reusable editor for key-value pairs displayed in a DataTable.
 ///
 /// Used by both [HeadersEditor] and [ParamsEditor] to avoid code duplication.
@@ -152,7 +165,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                     headingRowHeight: 32,
                     dividerThickness: 0,
                     headingRowColor: WidgetStateProperty.all(
-                      const Color(0x08000000),
+                      cs.surfaceContainerLow,
                     ),
                     border: TableBorder(
                       top: BorderSide(color: outerBorder),
@@ -173,7 +186,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                               widget.keyHeader,
                               style: TextStyle(
                                 fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                                 color: cs.onSurfaceVariant,
                               ),
                             ),
@@ -189,7 +202,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                               widget.valueHeader,
                               style: TextStyle(
                                 fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                                 color: cs.onSurfaceVariant,
                               ),
                             ),
@@ -205,7 +218,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                               widget.descHeader,
                               style: TextStyle(
                                 fontSize: 11,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                                 color: cs.onSurfaceVariant,
                               ),
                             ),
@@ -228,8 +241,12 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                       final row = _rows[index];
                       return DataRow(
                         color: WidgetStateProperty.resolveWith((states) {
-                          if (index.isOdd) return const Color(0x04000000);
-                          return null;
+                          if (states.contains(WidgetState.hovered)) {
+                            return cs.onSurface.withValues(alpha: 0.04);
+                          }
+                          return index.isOdd
+                              ? cs.surfaceContainerLow
+                              : cs.surface;
                         }),
                         cells: [
                           DataCell(
@@ -254,14 +271,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                               width: keyWidth,
                               child: TextField(
                                 controller: row.keyCtrl,
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 6,
-                                  ),
-                                  border: InputBorder.none,
-                                ),
+                                decoration: _cellDecoration,
                                 style: const TextStyle(fontSize: 13),
                                 onChanged: (v) => _emitChange(),
                               ),
@@ -272,14 +282,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                               width: valueWidth,
                               child: TextField(
                                 controller: row.valueCtrl,
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 6,
-                                  ),
-                                  border: InputBorder.none,
-                                ),
+                                decoration: _cellDecoration,
                                 style: const TextStyle(fontSize: 13),
                                 onChanged: (v) => _emitChange(),
                               ),
@@ -290,14 +293,7 @@ class _KeyValueTableEditorState extends State<KeyValueTableEditor> {
                               width: descWidth,
                               child: TextField(
                                 controller: row.descCtrl,
-                                decoration: const InputDecoration(
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 6,
-                                  ),
-                                  border: InputBorder.none,
-                                ),
+                                decoration: _cellDecoration,
                                 style: const TextStyle(fontSize: 13),
                                 onChanged: (v) => _emitChange(),
                               ),
